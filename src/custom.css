@@ -9,7 +9,7 @@
     --white : #fff;
     --white-50 : #F4F6FF;
     --orange : #FD841F;
-    --black : #323232
+    --black : #323232;
 }
 
 * , html , body{
@@ -18,7 +18,6 @@
 }
 
 body {
-    display: flex;
     direction: rtl;
     background-color: var(--white-50);
 }

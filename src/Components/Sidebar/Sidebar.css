@@ -6,7 +6,9 @@
 	flex: 1;
 	height: 100vh;
 	background-color: var(--black);
-	position: fixed;
+	position: sticky;
+	top: 0;
+	right: 0;
 	padding-top: 15px;
 }
 
