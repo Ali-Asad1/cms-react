@@ -9,9 +9,16 @@
     --white : #fff;
     --white-50 : #F4F6FF;
     --orange : #FD841F;
+    --black : #323232
 }
 
 * , html , body{
     box-sizing: border-box;
     font-family: vazir;
+}
+
+body {
+    display: flex;
+    direction: rtl;
+    background-color: var(--white-50);
 }
