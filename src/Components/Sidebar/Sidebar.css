@@ -1,8 +1,13 @@
+:root {
+	--item-height: 47.5px;
+}
+
 .sidebar {
 	flex: 1;
 	height: 100vh;
 	background-color: var(--black);
 	position: fixed;
+	padding-top: 15px;
 }
 
 .sidebar .sidebar-title {
@@ -16,16 +21,12 @@
 .sidebar .sidebar-links {
 	margin-top: 20px;
 	padding-right: 10px;
+	position: relative;
 }
 
 .sidebar .sidebar-links li {
 	position: relative;
-	margin-bottom: 10px;
 	border-radius: 0 5px 5px 0;
-}
-
-.sidebar .sidebar-links li.active {
-	background-color: #0000005d;
 }
 
 .sidebar .sidebar-links li a {
@@ -36,10 +37,67 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	gap: 8px;
 	font-size: 1.1rem;
 	transition: color 0.4s;
+}
+
+.sidebar .sidebar-links li.active {
+	color: var(--white);
+	background-color: #0000005d;
 }
 
 .sidebar .sidebar-links li a:hover {
 	color: var(--white);
 }
+
+.sidebar-links .underline {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 3px;
+	height: 48px;
+	background: var(--orange);
+	transition: all 0.3s;
+}
+
+/* Active */
+.sidebar-links li:nth-child(1).active ~ .underline {
+	transform: translateY(0);
+}
+.sidebar-links li:nth-child(2).active ~ .underline {
+	transform: translateY(var(--item-height));
+}
+.sidebar-links li:nth-child(3).active ~ .underline {
+	transform: translateY(calc(var(--item-height) * 2));
+}
+.sidebar-links li:nth-child(4).active ~ .underline {
+	transform: translateY(calc(var(--item-height) * 3));
+}
+.sidebar-links li:nth-child(5).active ~ .underline {
+	transform: translateY(calc(var(--item-height) * 4));
+}
+.sidebar-links li:nth-child(6).active ~ .underline {
+	transform: translateY(calc(var(--item-height) * 5));
+}
+
+/* Hover */
+.sidebar-links li:nth-child(1):hover ~ .underline {
+	transform: translateY(0);
+}
+.sidebar-links li:nth-child(2):hover ~ .underline {
+	transform: translateY(var(--item-height));
+}
+.sidebar-links li:nth-child(3):hover ~ .underline {
+	transform: translateY(calc(var(--item-height) * 2));
+}
+.sidebar-links li:nth-child(4):hover ~ .underline {
+	transform: translateY(calc(var(--item-height) * 3));
+}
+.sidebar-links li:nth-child(5):hover ~ .underline {
+	transform: translateY(calc(var(--item-height) * 4));
+}
+.sidebar-links li:nth-child(6):hover ~ .underline {
+	transform: translateY(calc(var(--item-height) * 5));
+}
+
