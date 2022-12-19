@@ -1,0 +1,17 @@
+@import './reset.css';
+
+@font-face {
+    font-family: vazir;
+    src: url(./fonts/Vazir.ttf);
+}
+
+:root {
+    --white : #fff;
+    --white-50 : #F4F6FF;
+    --orange : #FD841F;
+}
+
+* , html , body{
+    box-sizing: border-box;
+    font-family: vazir;
+}
