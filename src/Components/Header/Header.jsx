@@ -1,7 +1,6 @@
 import React from 'react'
 import './Header.css'
-import { AiOutlineBell } from 'react-icons/ai'
-import { BsBrightnessHigh } from 'react-icons/bs'
+import { BsFillBrightnessHighFill , BsFillBellFill } from 'react-icons/bs'
 export default function Header() {
     return (
         <div className='header'>
@@ -18,10 +17,10 @@ export default function Header() {
                     <button id='search-btn'>جست و جو</button>
                 </div>
                 <button className="header-icon">
-                    <AiOutlineBell />
+                    <BsFillBellFill />
                 </button>
                 <button className="header-icon">
-                    <BsBrightnessHigh />
+                    <BsFillBrightnessHighFill />
                 </button>
             </div>
         </div>
