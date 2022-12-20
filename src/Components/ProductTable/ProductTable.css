@@ -1,0 +1,36 @@
+.products-table {
+	margin-top: 3rem;
+	width: 100%;
+	padding: 15px 0;
+	background-color: var(--white);
+	border-radius: 10px;
+	text-align: center;
+}
+
+.products-table table {
+	width: 100%;
+}
+
+.products-table table tbody tr {
+	margin: 15px 0;
+}
+
+.products-table td {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.product-table-img {
+	width: 150px;
+}
+
+.product-table-btn {
+	background-color: var(--orange);
+	border: none;
+	color: var(--white);
+	padding: 8px 15px;
+	margin: 0 3px;
+	border-radius: 10px;
+	font-weight: 600;
+	box-shadow: rgb(149, 157, 165, 20%) 0 8px 24px;
+}

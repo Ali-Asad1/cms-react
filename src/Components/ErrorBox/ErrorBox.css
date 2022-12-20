@@ -1,6 +1,7 @@
 .cms-empty-error {
     background-color: #ff4f4f;
     color: var(--white);
+    margin: 40px 0;
     padding: 20px;
     font-size: 2rem;
     font-weight: 600;
