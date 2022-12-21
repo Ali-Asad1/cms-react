@@ -11,9 +11,6 @@
 	width: 100%;
 }
 
-.products-table table tbody tr {
-	margin: 15px 0;
-}
 
 .products-table td {
 	text-align: center;
@@ -21,7 +18,7 @@
 }
 
 .product-table-img {
-	width: 150px;
+	width: 80px;
 }
 
 .product-table-btn {
