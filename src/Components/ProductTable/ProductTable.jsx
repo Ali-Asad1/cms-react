@@ -4,6 +4,7 @@ import DetailModal from '../Modals/DetailModal/DetailModal'
 import './ProductTable.css'
 export default function ProductTable() {
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
+    const [isShowDetailsModal, setIsShowDetailsModal] = useState(false)
 
 
     const deleteModalCalncelAction = () => {
@@ -13,6 +14,9 @@ export default function ProductTable() {
         setIsShowDeleteModal(false)
     }
 
+    const detailsModalClose = () => {
+        setIsShowDetailsModal(false)
+    }
     return (
         <>
             <div className="products-table">
@@ -34,7 +38,7 @@ export default function ProductTable() {
                             <td>55.000.000</td>
                             <td>5</td>
                             <td>
-                                <button className="product-table-btn">جزییات</button>
+                                <button className="product-table-btn" onClick={() => setIsShowDetailsModal(true)}>جزییات</button>
                                 <button className="product-table-btn" onClick={() => setIsShowDeleteModal(true)}>حذف</button>
                                 <button className="product-table-btn">ویرایش</button>
                             </td>
@@ -42,7 +46,8 @@ export default function ProductTable() {
 
                     </tbody>
                 </table>
-                {isShowDeleteModal && <DeleteModal deleteModalCalncelAction={deleteModalCalncelAction} deleteModalConfirmAction={deleteModalConfirmAction} />}
+                {isShowDetailsModal && <DetailModal onClose={detailsModalClose} />}
+                {isShowDeleteModal && <DeleteModal onCancel={deleteModalCalncelAction} onConfirm={deleteModalConfirmAction} />}
             </div>
         </>
     )
