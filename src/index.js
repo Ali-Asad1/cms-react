@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
+import './Components/Modals/cms-modal.css'
 import './index.css';
 import './custom.css';
 import App from './App';

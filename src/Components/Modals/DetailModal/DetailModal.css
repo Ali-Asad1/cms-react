@@ -1,0 +1,26 @@
+.details-modal {
+	background-color: var(--white);
+	padding: 50px;
+	text-align: center;
+	border-radius: 15px;
+}
+
+.details-modal-btns {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.details-btn {
+	width: 100%;
+	font-size: 1.3rem;
+	font-weight: 600;
+	padding: 18px 0;
+	border: none;
+	border-radius: 5px;
+}
+
+.details-btn.detail-close {
+	background-color: var(--orange);
+}
