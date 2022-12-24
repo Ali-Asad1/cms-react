@@ -27,10 +27,35 @@
 }
 
 .edit-modal-confirm-btn {
-    background-color: var(--orange);
-    color: var(--white);
+	background-color: var(--orange);
+	color: var(--white);
 }
 .edit-modal-reject-btn {
-    background-color: var(--white);
-    border: 3px solid var(--orange);
+	background-color: var(--white);
+	border: 3px solid var(--orange);
+}
+
+/* form inputs */
+
+.edit-form-group {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 5px 15px;
+	background-color: #f4f4f4;
+	border-radius: 25px;
+	margin-top: 15px;
+}
+
+.edit-form-input {
+	width: 100%;
+	outline: none;
+	border: none;
+	background-color: unset;
+	font-weight: 600;
+}
+
+.edit-form-group:nth-child(2) {
+	margin-top: 25px;
 }

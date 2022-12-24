@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import DeleteModal from '../Modals/DeleteModal/DeleteModal'
 import DetailModal from '../Modals/DetailModal/DetailModal'
 import EditModal from '../Modals/EditModal/EditModal'
+import { BsCursorText, BsBag } from 'react-icons/bs'
+
+
 import './ProductTable.css'
 export default function ProductTable() {
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
@@ -67,7 +70,14 @@ export default function ProductTable() {
                 {
                     isShowEditModal &&
                     <EditModal onClose={editModalClose} onSubmit={updateProductInfos}>
-                        {/* children */}
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='نام جدید ...' />
+                        </div>
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='نام جدید ...' />
+                        </div>
                     </EditModal>
                 }
             </div>
