@@ -1,22 +1,22 @@
-.delete-modal {
+.edit-modal {
 	background-color: var(--white);
 	padding: 50px;
 	text-align: center;
 	border-radius: 15px;
 }
 
-.delete-modal h1 {
+.edit-modal h1 {
 	font-size: 1.5rem;
 	font-weight: 600;
 }
 
-.delete-modal-btns {
+.edit-modal-btns {
 	display: flex;
 	gap: 10px;
 	margin-top: 30px;
 }
 
-.delete-btn {
+.edit-btn {
 	width: 100%;
 	font-size: 1.3rem;
 	font-weight: 600;
@@ -26,11 +26,11 @@
 	cursor: pointer;
 }
 
-.delete-modal-accept-btn {
-	background-color: var(--orange);
-	color: var(--white);
+.edit-modal-confirm-btn {
+    background-color: var(--orange);
+    color: var(--white);
 }
-.delete-modal-reject-btn {
-	background-color: var(--white);
-	border: 3px solid var(--orange);
+.edit-modal-reject-btn {
+    background-color: var(--white);
+    border: 3px solid var(--orange);
 }
