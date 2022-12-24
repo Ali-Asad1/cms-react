@@ -8,46 +8,51 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	opacity: 0;
-	visibility: hidden;
-	transition: 0.3s;
 }
 
 .modal-parent.active {
-	opacity: 1;
-	visibility: visible;
+	animation: show 0.2s linear 0s 1;
 }
 
 .delete-modal {
 	background-color: var(--white);
-    padding: 50px;
-    text-align: center;
+	padding: 50px;
+	text-align: center;
 	border-radius: 15px;
-}	
+}
 
 .delete-modal h1 {
-    font-size: 2rem;
+	font-size: 2rem;
 }
 
 .delete-modal-btns {
-    display: flex;
-    gap: 10px;
-    margin-top: 30px;
+	display: flex;
+	gap: 10px;
+	margin-top: 30px;
 }
 
 .delete-btn {
-    width: 100%;
-    font-size: 1.3rem;
-    font-weight: 600;
-    padding: 18px 0;
+	width: 100%;
+	font-size: 1.3rem;
+	font-weight: 600;
+	padding: 18px 0;
 	border: none;
 	border-radius: 5px;
 }
 
 .delete-modal-accept-btn {
-    background-color: var(--orange);
+	background-color: var(--orange);
 }
 .delete-modal-reject-btn {
-    background-color: var(--white);
+	background-color: var(--white);
 	border: 3px solid var(--orange);
+}
+
+@keyframes show {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

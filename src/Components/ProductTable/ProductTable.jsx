@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import DeleteModal from '../DeleteModal/DeleteModal'
 import './ProductTable.css'
 export default function ProductTable() {
+    const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
+
+
+    const deleteModalCalncelAction = () => {
+        setIsShowDeleteModal(false)
+    }
+    const deleteModalConfirmAction = () => {
+        setIsShowDeleteModal(false)
+    }
+
     return (
         <div className="products-table">
             <table className="table">
@@ -22,38 +33,14 @@ export default function ProductTable() {
                         <td>5</td>
                         <td>
                             <button className="product-table-btn">جزییات</button>
-                            <button className="product-table-btn">حذف</button>
+                            <button className="product-table-btn" onClick={() => setIsShowDeleteModal(true)}>حذف</button>
                             <button className="product-table-btn">ویرایش</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <img src="/images/airpods.jpg" alt="" className='product-table-img' />
-                        </td>
-                        <td>ایرپاد پرو</td>
-                        <td>11.000.000</td>
-                        <td>15</td>
-                        <td>
-                            <button className="product-table-btn">جزییات</button>
-                            <button className="product-table-btn">حذف</button>
-                            <button className="product-table-btn">ویرایش</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="/images/laptop.jpg" alt="" className='product-table-img' />
-                        </td>
-                        <td>لپتاپ ایسوس</td>
-                        <td>16.500.000</td>
-                        <td>2</td>
-                        <td>
-                            <button className="product-table-btn">جزییات</button>
-                            <button className="product-table-btn">حذف</button>
-                            <button className="product-table-btn">ویرایش</button>
-                        </td>
-                    </tr>
+
                 </tbody>
             </table>
+            {isShowDeleteModal && <DeleteModal deleteModalCalncelAction={deleteModalCalncelAction} deleteModalConfirmAction={deleteModalConfirmAction} />}
         </div>
     )
 }
