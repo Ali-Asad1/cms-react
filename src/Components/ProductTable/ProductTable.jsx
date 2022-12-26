@@ -1,16 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DeleteModal from '../Modals/DeleteModal/DeleteModal'
 import DetailModal from '../Modals/DetailModal/DetailModal'
 import EditModal from '../Modals/EditModal/EditModal'
 import { BsCursorText, BsBag } from 'react-icons/bs'
-
-
+import ErrorBox from '../ErrorBox/ErrorBox'
 import './ProductTable.css'
+
+
 export default function ProductTable() {
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false)
     const [isShowEditModal, setIsShowEditModal] = useState(false)
+    const [allProduct, setAllProduct] = useState([])
+    const [isInProgress, setIsInProgress] = useState(true)
 
+    useEffect(() => {
+        fetchDatas()
+    }, [])
+
+
+    const fetchDatas = () => {
+        fetch('http://localhost:8000/api/products')
+            .then(res => res.json())
+            .then(data => {
+                setAllProduct(data)
+                setTimeout(() => {
+                    setIsInProgress(false)
+                }, 2000);
+            })
+            .catch(err => console.warn(err))
+    }
     //* Delete Modal Actions
     const deleteModalCalncelAction = () => {
         setIsShowDeleteModal(false)
@@ -39,48 +58,70 @@ export default function ProductTable() {
     return (
         <>
             <div className="products-table">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>عکس</th>
-                            <th>اسم</th>
-                            <th>قیمت</th>
-                            <th>موجودی</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src="/images/iphone.jpg" alt="" className='product-table-img' />
-                            </td>
-                            <td>گوشی ایفون 13 پرو مکس</td>
-                            <td>55.000.000</td>
-                            <td>5</td>
-                            <td>
-                                <button className="product-table-btn" onClick={() => setIsShowDetailsModal(true)}>جزییات</button>
-                                <button className="product-table-btn" onClick={() => setIsShowDeleteModal(true)}>حذف</button>
-                                <button className="product-table-btn" onClick={() => setIsShowEditModal(true)}>ویرایش</button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-                {isShowDetailsModal && <DetailModal onClose={detailsModalClose} />}
-                {isShowDeleteModal && <DeleteModal onCancel={deleteModalCalncelAction} onConfirm={deleteModalConfirmAction} />}
                 {
-                    isShowEditModal &&
-                    <EditModal onClose={editModalClose} onSubmit={updateProductInfos}>
-                        <div className="edit-form-group">
-                            <BsCursorText />
-                            <input type="text" className="edit-form-input" placeholder='نام جدید ...' />
+                    isInProgress ? (
+                        <div className='loader-container'>
+                            <span className="loader"></span>
                         </div>
-                        <div className="edit-form-group">
-                            <BsCursorText />
-                            <input type="text" className="edit-form-input" placeholder='نام جدید ...' />
-                        </div>
-                    </EditModal>
+                    ) : (
+                        <>
+                            {
+                                allProduct.length ? (
+                                    <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th>عکس</th>
+                                                <th>اسم</th>
+                                                <th>قیمت</th>
+                                                <th>موجودی</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {allProduct.map(product => (
+                                                <tr key={product.id}>
+                                                    <td>
+                                                        <img src={product.img} alt={product.title} className='product-table-img' />
+                                                    </td>
+                                                    <td>{product.title}</td>
+                                                    <td>{product.price}</td>
+                                                    <td>{product.count}</td>
+                                                    <td>
+                                                        <button className="product-table-btn" onClick={() => setIsShowDetailsModal(true)}>جزییات</button>
+                                                        <button className="product-table-btn" onClick={() => setIsShowDeleteModal(true)}>حذف</button>
+                                                        <button className="product-table-btn" onClick={() => setIsShowEditModal(true)}>ویرایش</button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+
+                                ) : (
+                                    <ErrorBox ErrMessage={"محصولی یافت نشد..."} />
+                                )
+
+                            }
+                            {isShowDetailsModal && <DetailModal onClose={detailsModalClose} />}
+                            {isShowDeleteModal && <DeleteModal onCancel={deleteModalCalncelAction} onConfirm={deleteModalConfirmAction} />}
+                            {
+                                isShowEditModal &&
+                                <EditModal onClose={editModalClose} onSubmit={updateProductInfos}>
+                                    <div className="edit-form-group">
+                                        <BsCursorText />
+                                        <input type="text" className="edit-form-input" placeholder='نام جدید ...' />
+                                    </div>
+                                    <div className="edit-form-group">
+                                        <BsCursorText />
+                                        <input type="text" className="edit-form-input" placeholder='نام جدید ...' />
+                                    </div>
+                                </EditModal>
+                            }
+                        </>
+                    )
                 }
             </div>
+
+
+
         </>
     )
 }

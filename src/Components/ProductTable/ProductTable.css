@@ -5,12 +5,17 @@
 	background-color: var(--white);
 	border-radius: 10px;
 	text-align: center;
+	
 }
 
 .products-table table {
 	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0 25px;
 }
 
+.products-table tr {
+}
 
 .products-table td {
 	text-align: center;

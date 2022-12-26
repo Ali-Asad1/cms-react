@@ -8,7 +8,6 @@ export default function Products() {
   return (
     <>
       <AddNewProduct />
-      <ErrorBox ErrMessage={'محصولی یافت نشد!'} />
       <ProductTable />
     </>
   )
