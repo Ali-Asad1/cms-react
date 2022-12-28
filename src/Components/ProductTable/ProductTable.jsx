@@ -4,6 +4,8 @@ import DetailModal from '../Modals/DetailModal/DetailModal'
 import EditModal from '../Modals/EditModal/EditModal'
 import { BsCursorText, BsBag } from 'react-icons/bs'
 import ErrorBox from '../ErrorBox/ErrorBox'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './ProductTable.css'
 
 
@@ -55,12 +57,12 @@ export default function ProductTable() {
             .then(res => {
                 console.log(res)
                 fetchDatas()
-            })
-            .then(result => {
-                fetchDatas()
+                successNotify('حذف محصول موفقیت آمیز بود')
 
+            }).catch(err => {
+                console.log(err)
+                errorNotify('حذف محصول موفقیت آمیز نبود')
             })
-            .catch(err => console.log(err))
     }
 
     //* Details Modal Actions
@@ -90,6 +92,11 @@ export default function ProductTable() {
         }).then(res => {
             console.log(res);
             fetchDatas()
+            successNotify('تغییر اطلاعات محصول موفقیت آمیز بود')
+
+        }).catch(err => {
+            console.log(err)
+            errorNotify('تغییر اطلاعات محصول موفقیت آمیز نبود')
         })
         setIsShowEditModal(false)
     }
@@ -105,123 +112,158 @@ export default function ProductTable() {
         setProductId(null)
     }
 
+    const successNotify = (toastMessage) => {
+        toast.success(toastMessage, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    }
+    const errorNotify = (toastMessage) => {
+        toast.error(toastMessage, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    }
     return (
         <>
             <div className="products-table">
+
                 {
-                    isInProgress ? (
-                        <div className='loader-container'>
-                            <span className="loader"></span>
-                        </div>
-                    ) : (
-                        <>
-                            {
-                                allProduct.length ? (
-                                    <table className="table">
-                                        <thead>
-                                            <tr>
-                                                <th>عکس</th>
-                                                <th>اسم</th>
-                                                <th>قیمت</th>
-                                                <th>موجودی</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {allProduct.map(product => (
-                                                <tr key={product.id}>
-                                                    <td>
-                                                        <img src={product.img} alt={product.title} className='product-table-img' />
-                                                    </td>
-                                                    <td>{product.title}</td>
-                                                    <td>{product.price}</td>
-                                                    <td>{product.count}</td>
-                                                    <td>
-                                                        <button className="product-table-btn" onClick={() => {
-                                                            setIsShowDeleteModal(true)
-                                                            setProductId(product.id)
-                                                        }}>حذف</button>
-                                                        <button className="product-table-btn" onClick={() => {
-                                                            setproductNewName(product.title)
-                                                            setProductNewPrice(product.price)
-                                                            setProductNewCount(product.count)
-                                                            setProductNewImg(product.img)
-                                                            setProductNewPopularity(product.popularity)
-                                                            setProductNewSale(product.sale)
-                                                            setProductNewColor(product.colors)
-                                                            setIsShowEditModal(true)
-                                                            setProductId(product.id)
-                                                        }}>ویرایش</button>
-                                                        <button className="product-table-btn" onClick={() => {
-                                                            setIsShowDetailsModal(true)
-                                                            setMainProduct(product)
-                                                        }}>جزییات</button>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-
-                                ) : (
-                                    <ErrorBox ErrMessage={"محصولی یافت نشد..."} />
-                                )
-
-                            }
-                            {isShowDeleteModal && <DeleteModal onCancel={deleteModalCalncelAction} onConfirm={deleteModalConfirmAction} />}
-                            {isShowDetailsModal && <DetailModal onClose={detailsModalClose} productDetails={mainProduct} />}
-                            {
-                                isShowEditModal &&
-                                <EditModal onClose={editModalClose} onSubmit={updateProductInfos}>
-                                    <div className="edit-form-group">
-                                        <BsCursorText />
-                                        <input type="text" className="edit-form-input" placeholder='نام جدید ...' value={productNewName} onChange={(e) => {
-                                            setproductNewName(e.target.value)
-                                        }} />
-                                    </div>
-                                    <div className="edit-form-group">
-                                        <BsCursorText />
-                                        <input type="text" className="edit-form-input" placeholder='قیمت جدید ...' value={productNewPrice} onChange={(e) => {
-                                            setProductNewPrice(e.target.value)
-                                        }} />
-                                    </div>
-                                    <div className="edit-form-group">
-                                        <BsCursorText />
-                                        <input type="text" className="edit-form-input" placeholder='موجودی جدید ...' value={productNewCount} onChange={(e) => {
-                                            setProductNewCount(e.target.value)
-                                        }} />
-                                    </div>
-                                    <div className="edit-form-group">
-                                        <BsCursorText />
-                                        <input type="text" className="edit-form-input" placeholder='عکس جدید ...' value={productNewImg} onChange={(e) => {
-                                            setProductNewImg(e.target.value)
-                                        }} />
-                                    </div>
-                                    <div className="edit-form-group">
-                                        <BsCursorText />
-                                        <input type="text" className="edit-form-input" placeholder='محبوبیت جدید ...' value={productNewPopularity} onChange={(e) => {
-                                            setProductNewPopularity(e.target.value)
-                                        }} />
-                                    </div>
-                                    <div className="edit-form-group">
-                                        <BsCursorText />
-                                        <input type="text" className="edit-form-input" placeholder='میزان فروش جدید ...' value={productNewSale} onChange={(e) => {
-                                            setProductNewSale(e.target.value)
-                                        }} />
-                                    </div>
-                                    <div className="edit-form-group">
-                                        <BsCursorText />
-                                        <input type="text" className="edit-form-input" placeholder='تعداد رنگ جدید ...' value={productNewColor} onChange={(e) => {
-                                            setProductNewColor(e.target.value)
-                                        }} />
-                                    </div>
-                                </EditModal>
-                            }
-                        </>
-                    )
+                    isInProgress &&
+                    <div className='loader-container'>
+                        <span className="loader"></span>
+                    </div>
                 }
+                {
+                    allProduct.length ? (
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>عکس</th>
+                                    <th>اسم</th>
+                                    <th>قیمت</th>
+                                    <th>موجودی</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {allProduct.map(product => (
+                                    <tr key={product.id}>
+                                        <td>
+                                            <img src={product.img} alt={product.title} className='product-table-img' />
+                                        </td>
+                                        <td>{product.title}</td>
+                                        <td>{product.price}</td>
+                                        <td>{product.count}</td>
+                                        <td>
+                                            <button className="product-table-btn" onClick={() => {
+                                                setIsShowDeleteModal(true)
+                                                setProductId(product.id)
+                                            }}>حذف</button>
+                                            <button className="product-table-btn" onClick={() => {
+                                                setproductNewName(product.title)
+                                                setProductNewPrice(product.price)
+                                                setProductNewCount(product.count)
+                                                setProductNewImg(product.img)
+                                                setProductNewPopularity(product.popularity)
+                                                setProductNewSale(product.sale)
+                                                setProductNewColor(product.colors)
+                                                setIsShowEditModal(true)
+                                                setProductId(product.id)
+                                            }}>ویرایش</button>
+                                            <button className="product-table-btn" onClick={() => {
+                                                setIsShowDetailsModal(true)
+                                                setMainProduct(product)
+                                            }}>جزییات</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+
+                    ) : (
+                        <ErrorBox ErrMessage={"محصولی یافت نشد..."} />
+                    )
+
+                }
+                {isShowDeleteModal && <DeleteModal onCancel={deleteModalCalncelAction} onConfirm={deleteModalConfirmAction} />}
+                {isShowDetailsModal && <DetailModal onClose={detailsModalClose} productDetails={mainProduct} />}
+                {
+                    isShowEditModal &&
+                    <EditModal onClose={editModalClose} onSubmit={updateProductInfos}>
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='نام جدید ...' value={productNewName} onChange={(e) => {
+                                setproductNewName(e.target.value)
+                            }} />
+                        </div>
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='قیمت جدید ...' value={productNewPrice} onChange={(e) => {
+                                setProductNewPrice(e.target.value)
+                            }} />
+                        </div>
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='موجودی جدید ...' value={productNewCount} onChange={(e) => {
+                                setProductNewCount(e.target.value)
+                            }} />
+                        </div>
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='عکس جدید ...' value={productNewImg} onChange={(e) => {
+                                setProductNewImg(e.target.value)
+                            }} />
+                        </div>
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='محبوبیت جدید ...' value={productNewPopularity} onChange={(e) => {
+                                setProductNewPopularity(e.target.value)
+                            }} />
+                        </div>
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='میزان فروش جدید ...' value={productNewSale} onChange={(e) => {
+                                setProductNewSale(e.target.value)
+                            }} />
+                        </div>
+                        <div className="edit-form-group">
+                            <BsCursorText />
+                            <input type="text" className="edit-form-input" placeholder='تعداد رنگ جدید ...' value={productNewColor} onChange={(e) => {
+                                setProductNewColor(e.target.value)
+                            }} />
+                        </div>
+                    </EditModal>
+                }
+
+
+
             </div>
 
 
-
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
         </>
     )
 }
