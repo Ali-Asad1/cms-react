@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './DetailModal.css'
-export default function DetailModal({ onClose }) {
+export default function DetailModal({ onClose, productDetails }) {
     return ReactDOM.createPortal(
         <div className='modal-parent show-modal'>
             <div className="details-modal">
@@ -17,9 +17,9 @@ export default function DetailModal({ onClose }) {
                     <tbody>
 
                         <tr>
-                            <td>آیفون 13</td>
-                            <td>55.000.000</td>
-                            <td>85%</td>
+                            <td>{productDetails.title}</td>
+                            <td>{productDetails.price}</td>
+                            <td>{productDetails.popularity}%</td>
                         </tr>
                     </tbody>
                 </table>

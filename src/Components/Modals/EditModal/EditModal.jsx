@@ -9,8 +9,14 @@ export default function EditModal({ children, onClose, onSubmit }) {
                 <h1>اطلاعات جدید را وارد کنید</h1>
                 {children}
                 <div className='edit-modal-btns'>
-                    <button className='edit-btn edit-modal-confirm-btn' onClick={(e) => onSubmit(e)}>ثبت</button>
-                    <button className='edit-btn edit-modal-reject-btn' onClick={(e) => onClose(e)}>بستن</button>
+                    <button className='edit-btn edit-modal-confirm-btn' onClick={(e) => {
+                        onSubmit()
+                        e.preventDefault()
+                    }}>ثبت</button>
+                    <button className='edit-btn edit-modal-reject-btn' onClick={(e) => {
+                        onClose()
+                        e.preventDefault()
+                    }}>بستن</button>
                 </div>
             </form>
         </div>, document.getElementById('modals-parent')
