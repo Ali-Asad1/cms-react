@@ -1,23 +1,25 @@
-@import './reset.css';
+@import "./reset.css";
 
 @font-face {
-    font-family: vazir;
-    src: url(./fonts/Vazir.ttf);
+	font-family: vazir;
+	src: url(./fonts/Vazir.ttf);
 }
 
 :root {
-    --white : #fff;
-    --white-50 : #F4F6FF;
-    --orange : #FD841F;
-    --black : #323232;
+	--white: #fff;
+	--white-50: #f4f6ff;
+	--orange: #fd841f;
+	--black: #323232;
 }
 
-* , html , body{
-    box-sizing: border-box;
-    font-family: vazir;
+*,
+html,
+body {
+	box-sizing: border-box;
+	font-family: vazir !important;
 }
 
 body {
-    direction: rtl;
-    background-color: var(--white-50);
+	direction: rtl;
+	background-color: var(--white-50);
 }
