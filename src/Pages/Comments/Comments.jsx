@@ -4,9 +4,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Comments.css'
 import Loader from '../../Components/Loader/Loader';
+import TextModal from '../../Components/Modals/TextModal/TextModal';
 export default function Comments() {
   const [allComments, setAllComments] = useState([])
   const [isInProgress, setIsInProgress] = useState(true)
+  const [isShowTextModal, setIsShowTextModal] = useState(false)
+  const [mainCommentText, setMainCommentText] = useState('')
 
 
   useEffect(() => {
@@ -25,6 +28,14 @@ export default function Comments() {
       })
       .catch(err => console.warn(err))
   }
+
+
+  const closeTextModal = () => {
+    setIsShowTextModal(false)
+    setMainCommentText('')
+  }
+
+  //* notify
   const successNotify = (toastMessage) => {
     toast.success(toastMessage, {
       position: "bottom-right",
@@ -80,7 +91,12 @@ export default function Comments() {
                       <td>{comment.date}</td>
                       <td>{comment.hour}</td>
                       <td>
-                        <button className="comments-table-btn">دیدن کامنت</button>
+                        <button className="comments-table-btn" onClick={() => {
+                          setIsShowTextModal(true)
+                          setMainCommentText(comment.body)
+                        }}>
+                          دیدن کامنت
+                        </button>
                       </td>
                       <td>
                         <button className="comments-table-btn">حذف</button>
@@ -96,6 +112,9 @@ export default function Comments() {
           ) : (
             <ErrorBox ErrMessage={'کامنتی یافت نشد!'} />
           )
+        }
+        {
+          isShowTextModal && <TextModal closeBtn={closeTextModal} commentText={mainCommentText} />
         }
       </div>
     </>
