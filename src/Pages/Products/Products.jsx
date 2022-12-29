@@ -1,14 +1,72 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AddNewProduct from '../../Components/AddNewProduct/AddNewProduct'
 import ErrorBox from '../../Components/ErrorBox/ErrorBox'
 import ProductTable from '../../Components/ProductTable/ProductTable'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Products.css'
 
 export default function Products() {
+  const [allProduct, setAllProduct] = useState([])
+  const [isInProgress, setIsInProgress] = useState(true)
+
+
+  useEffect(() => {
+    fetchDatas()
+  }, [])
+
+  const fetchDatas = () => {
+    setIsInProgress(true)
+    fetch('http://localhost:8000/api/products')
+      .then(res => res.json())
+      .then(data => {
+        setAllProduct(data.reverse())
+        setTimeout(() => {
+          setIsInProgress(false)
+        }, 2000);
+      })
+      .catch(err => console.warn(err))
+  }
+  const successNotify = (toastMessage) => {
+    toast.success(toastMessage, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
+  const errorNotify = (toastMessage) => {
+    toast.error(toastMessage, {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }
   return (
     <>
-      <AddNewProduct />
-      <ProductTable />
+      <AddNewProduct fetchDatas={fetchDatas} successNotify={successNotify} errorNotify={errorNotify} />
+      <ProductTable fetchDatas={fetchDatas} allProduct={allProduct} isInProgress={isInProgress} successNotify={successNotify} errorNotify={errorNotify} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   )
 }

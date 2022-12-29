@@ -4,17 +4,13 @@ import DetailModal from '../Modals/DetailModal/DetailModal'
 import EditModal from '../Modals/EditModal/EditModal'
 import { BsCursorText, BsBag } from 'react-icons/bs'
 import ErrorBox from '../ErrorBox/ErrorBox'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import './ProductTable.css'
 
 
-export default function ProductTable() {
+export default function ProductTable({ allProduct, isInProgress, fetchDatas, successNotify, errorNotify }) {
     const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
     const [isShowDetailsModal, setIsShowDetailsModal] = useState(false)
     const [isShowEditModal, setIsShowEditModal] = useState(false)
-    const [allProduct, setAllProduct] = useState([])
-    const [isInProgress, setIsInProgress] = useState(true)
     const [productId, setProductId] = useState(null)
     const [mainProduct, setMainProduct] = useState(null)
     const [productNewName, setproductNewName] = useState('')
@@ -25,23 +21,7 @@ export default function ProductTable() {
     const [productNewSale, setProductNewSale] = useState('')
     const [productNewColor, setProductNewColor] = useState('')
 
-    useEffect(() => {
-        fetchDatas()
-    }, [])
 
-
-    const fetchDatas = () => {
-        setIsInProgress(true)
-        fetch('http://localhost:8000/api/products')
-            .then(res => res.json())
-            .then(data => {
-                setAllProduct(data)
-                setTimeout(() => {
-                    setIsInProgress(false)
-                }, 2000);
-            })
-            .catch(err => console.warn(err))
-    }
     //* Delete Modal Actions
     const deleteModalCalncelAction = () => {
         setIsShowDeleteModal(false)
@@ -92,11 +72,11 @@ export default function ProductTable() {
         }).then(res => {
             console.log(res);
             fetchDatas()
-            successNotify('تغییر اطلاعات محصول موفقیت آمیز بود')
+            successNotify('تغییر اطلاعات موفقیت آمیز بود')
 
         }).catch(err => {
             console.log(err)
-            errorNotify('تغییر اطلاعات محصول موفقیت آمیز نبود')
+            errorNotify('تغییر اطلاعات موفقیت آمیز نبود')
         })
         setIsShowEditModal(false)
     }
@@ -112,30 +92,7 @@ export default function ProductTable() {
         setProductId(null)
     }
 
-    const successNotify = (toastMessage) => {
-        toast.success(toastMessage, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    }
-    const errorNotify = (toastMessage) => {
-        toast.error(toastMessage, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
-    }
+
     return (
         <>
             <div className="products-table">
@@ -252,18 +209,7 @@ export default function ProductTable() {
             </div>
 
 
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
+
         </>
     )
 }
