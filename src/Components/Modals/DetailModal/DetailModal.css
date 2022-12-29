@@ -23,6 +23,6 @@
 }
 
 .details-btn.detail-close {
-	background-color: var(--orange);
+	background-color: var(--primary);
 	color: var(--white);
 }

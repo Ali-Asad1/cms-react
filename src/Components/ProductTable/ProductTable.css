@@ -24,7 +24,7 @@
 }
 
 .product-table-btn {
-	background-color: var(--orange);
+	background-color: var(--primary);
 	border: none;
 	color: var(--white);
 	padding: 8px 15px;

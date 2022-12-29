@@ -59,7 +59,7 @@
 	left: 0;
 	width: 3px;
 	height: 48px;
-	background: var(--orange);
+	background: var(--primary);
 	transition: all 0.3s;
 	pointer-events: none;
 }

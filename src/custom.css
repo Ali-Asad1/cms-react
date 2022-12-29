@@ -8,7 +8,7 @@
 :root {
 	--white: #fff;
 	--white-50: #f4f6ff;
-	--orange: #fd841f;
+	--primary: #2f78e5fd;
 	--black: #323232;
 }
 
@@ -23,3 +23,8 @@ body {
 	direction: rtl;
 	background-color: var(--white-50);
 }
+/*
+ 47B5FF
+1363DF
+5170FD
+ */

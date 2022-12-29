@@ -5,6 +5,7 @@ import EditModal from '../Modals/EditModal/EditModal'
 import { BsCursorText, BsBag } from 'react-icons/bs'
 import ErrorBox from '../ErrorBox/ErrorBox'
 import './ProductTable.css'
+import Loader from '../Loader/Loader'
 
 
 export default function ProductTable({ allProduct, isInProgress, fetchDatas, successNotify, errorNotify }) {
@@ -99,9 +100,7 @@ export default function ProductTable({ allProduct, isInProgress, fetchDatas, suc
 
                 {
                     isInProgress &&
-                    <div className='loader-container'>
-                        <span className="loader"></span>
-                    </div>
+                    <Loader />
                 }
                 {
                     allProduct.length ? (

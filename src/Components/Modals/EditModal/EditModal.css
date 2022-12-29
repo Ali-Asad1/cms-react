@@ -27,12 +27,12 @@
 }
 
 .edit-modal-confirm-btn {
-	background-color: var(--orange);
+	background-color: var(--primary);
 	color: var(--white);
 }
 .edit-modal-reject-btn {
 	background-color: var(--white);
-	border: 3px solid var(--orange);
+	border: 3px solid var(--primary);
 }
 
 /* form inputs */
