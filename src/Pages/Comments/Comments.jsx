@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react'
 import ErrorBox from '../../Components/ErrorBox/ErrorBox'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Comments.css'
 import Loader from '../../Components/Loader/Loader';
 import TextModal from '../../Components/Modals/TextModal/TextModal';
 import DeleteModal from '../../Components/Modals/DeleteModal/DeleteModal';
+import EditModal from '../../Components/Modals/EditModal/EditModal';
+import { BsCursorText } from 'react-icons/bs'
+import './Comments.css'
+
 export default function Comments() {
 
   const [allComments, setAllComments] = useState([])
   const [isInProgress, setIsInProgress] = useState(true)
   const [isShowTextModal, setIsShowTextModal] = useState(false)
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
+  const [isShowEditModal, setIsShowEditModal] = useState(false)
   const [mainCommentText, setMainCommentText] = useState('')
   const [commentID, setCommentID] = useState(null)
+  const [commentNewText, setCommentNewText] = useState('')
 
 
   useEffect(() => {
@@ -56,6 +61,38 @@ export default function Comments() {
   }
   const deleteModalCancelAction = () => {
     setIsShowDeleteModal(false)
+    setCommentID(null)
+  }
+
+  // edit modal actions 
+  const editModalConfirmAction = () => {
+
+    let newCommentText = {
+      body: commentNewText
+    }
+
+    fetch(`http://localhost:8000/api/comments/${commentID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(newCommentText)
+    }).then(res => {
+      console.log(res);
+      fetchDatas()
+      successNotify('متن کامنت با موفقیت تغییر کرد')
+    }).catch(err => {
+      console.log(err);
+      errorNotify('تغییر متن کامنت موفقیت آمیز نبود')
+    })
+
+    setIsShowEditModal(false)
+    setCommentID(null)
+    setCommentNewText('')
+  }
+
+  const editModalCancelAction = () => {
+    setIsShowEditModal(false)
     setCommentID(null)
   }
 
@@ -127,7 +164,10 @@ export default function Comments() {
                           setIsShowDeleteModal(true)
                           setCommentID(comment.id)
                         }}>حذف</button>
-                        <button className="comments-table-btn">ویرایش</button>
+                        <button className="comments-table-btn" onClick={() => {
+                          setIsShowEditModal(true)
+                          setCommentID(comment.id)
+                        }}>ویرایش</button>
                         <button className="comments-table-btn">پاسخ</button>
                         <button className="comments-table-btn">تایید</button>
                       </td>
@@ -145,6 +185,16 @@ export default function Comments() {
         }
         {
           isShowDeleteModal && <DeleteModal onConfirm={deleteModalConfirmAction} onCancel={deleteModalCancelAction} />
+        }
+        {
+          isShowEditModal && <EditModal onSubmit={editModalConfirmAction} onClose={editModalCancelAction}>
+            <div className="edit-form-group">
+              <BsCursorText />
+              <input type="text" className="edit-form-input" placeholder='متن جدید ...' value={commentNewText} onChange={(e) => {
+                setCommentNewText(e.target.value)
+              }} />
+            </div>
+          </EditModal>
         }
       </div>
       <ToastContainer
