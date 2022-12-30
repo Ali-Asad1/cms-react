@@ -5,11 +5,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import './Comments.css'
 import Loader from '../../Components/Loader/Loader';
 import TextModal from '../../Components/Modals/TextModal/TextModal';
+import DeleteModal from '../../Components/Modals/DeleteModal/DeleteModal';
 export default function Comments() {
+
   const [allComments, setAllComments] = useState([])
   const [isInProgress, setIsInProgress] = useState(true)
   const [isShowTextModal, setIsShowTextModal] = useState(false)
+  const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
   const [mainCommentText, setMainCommentText] = useState('')
+  const [commentID, setCommentID] = useState(null)
 
 
   useEffect(() => {
@@ -29,10 +33,30 @@ export default function Comments() {
       .catch(err => console.warn(err))
   }
 
-
+  // text modal action
   const closeTextModal = () => {
     setIsShowTextModal(false)
     setMainCommentText('')
+  }
+
+  // delete modal action
+  const deleteModalConfirmAction = () => {
+    fetch(`http://localhost:8000/api/comments/${commentID}`, {
+      method: 'DELETE'
+    }).then(res => {
+      console.log(res);
+      fetchDatas()
+      successNotify('کامنت با موفقیت حذف شد')
+    }).catch(err => {
+      console.log(err);
+      errorNotify('حذف کامنت موفقیت آمیز نبود')
+    })
+    setIsShowDeleteModal(false)
+    setCommentID(null)
+  }
+  const deleteModalCancelAction = () => {
+    setIsShowDeleteModal(false)
+    setCommentID(null)
   }
 
   //* notify
@@ -85,7 +109,7 @@ export default function Comments() {
               <tbody>
                 {
                   allComments.map((comment) => (
-                    <tr>
+                    <tr key={comment.id}>
                       <td>{comment.userID}</td>
                       <td>{comment.productID}</td>
                       <td>{comment.date}</td>
@@ -99,7 +123,10 @@ export default function Comments() {
                         </button>
                       </td>
                       <td>
-                        <button className="comments-table-btn">حذف</button>
+                        <button className="comments-table-btn" onClick={() => {
+                          setIsShowDeleteModal(true)
+                          setCommentID(comment.id)
+                        }}>حذف</button>
                         <button className="comments-table-btn">ویرایش</button>
                         <button className="comments-table-btn">پاسخ</button>
                         <button className="comments-table-btn">تایید</button>
@@ -116,7 +143,22 @@ export default function Comments() {
         {
           isShowTextModal && <TextModal closeBtn={closeTextModal} commentText={mainCommentText} />
         }
+        {
+          isShowDeleteModal && <DeleteModal onConfirm={deleteModalConfirmAction} onCancel={deleteModalCancelAction} />
+        }
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   )
 }
