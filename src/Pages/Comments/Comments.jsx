@@ -4,10 +4,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../../Components/Loader/Loader';
 import TextModal from '../../Components/Modals/TextModal/TextModal';
-import DeleteModal from '../../Components/Modals/DeleteModal/DeleteModal';
+import DeleteModal from '../../Components/Modals/AcceptModal/AcceptModal';
 import EditModal from '../../Components/Modals/EditModal/EditModal';
 import { BsCursorText } from 'react-icons/bs'
 import './Comments.css'
+import AcceptModal from '../../Components/Modals/AcceptModal/AcceptModal';
 
 export default function Comments() {
 
@@ -16,6 +17,8 @@ export default function Comments() {
   const [isShowTextModal, setIsShowTextModal] = useState(false)
   const [isShowDeleteModal, setIsShowDeleteModal] = useState(false)
   const [isShowEditModal, setIsShowEditModal] = useState(false)
+  const [isShowAcceptModal, setIsShowAcceptModal] = useState(false)
+  const [isShowRejectModal, setIsShowRejectModal] = useState(false)
   const [mainCommentText, setMainCommentText] = useState('')
   const [commentID, setCommentID] = useState(null)
   const [commentNewText, setCommentNewText] = useState('')
@@ -96,6 +99,43 @@ export default function Comments() {
     setCommentID(null)
   }
 
+  // accpet comment actions
+
+  const acceptModalConfirmAction = () => {
+    setIsShowAcceptModal(false)
+    fetch(`http://localhost:8000/api/comments/accept/${commentID}`, {
+      method: 'POST'
+    }).then(res => {
+      console.log(res);
+      fetchDatas()
+      successNotify('کامنت با موفقیت تایید شد')
+    }).catch(err => {
+      console.log(err);
+      errorNotify('تایید کامنت موقیت آمیز نبود')
+    })
+  }
+  const acceptModalCancelAction = () => {
+    setIsShowAcceptModal(false)
+  }
+
+  // reject modal actions
+  const rejectModalConfirmAction = () => {
+    setIsShowRejectModal(false)
+    fetch(`http://localhost:8000/api/comments/reject/${commentID}`, {
+      method: 'POST'
+    }).then(res => {
+      console.log(res);
+      fetchDatas()
+      successNotify('کامنت با موفقیت رد شد')
+    }).catch(err => {
+      console.log(err);
+      errorNotify('رد کامنت موقیت آمیز نبود')
+    })
+  }
+  const rejectModalCancelAction = () => {
+    setIsShowRejectModal(false)
+  }
+
   //* notify
   const successNotify = (toastMessage) => {
     toast.success(toastMessage, {
@@ -169,7 +209,19 @@ export default function Comments() {
                           setCommentID(comment.id)
                         }}>ویرایش</button>
                         <button className="comments-table-btn">پاسخ</button>
-                        <button className="comments-table-btn">تایید</button>
+                        {
+                          comment.isAccept == 0 ? (
+                            <button className="comments-table-btn" onClick={() => {
+                              setIsShowAcceptModal(true)
+                              setCommentID(comment.id)
+                            }}>تایید</button>
+                          ) : (
+                            <button className="comments-table-btn" onClick={() => {
+                              setIsShowRejectModal(true)
+                              setCommentID(comment.id)
+                            }}>رد</button>
+                          )
+                        }
                       </td>
                     </tr>
                   ))
@@ -195,6 +247,12 @@ export default function Comments() {
               }} />
             </div>
           </EditModal>
+        }
+        {
+          isShowAcceptModal && <AcceptModal onConfirm={acceptModalConfirmAction} onCancel={acceptModalCancelAction} title={'آیا از تایید کامنت اطمینان دارید؟'} />
+        }
+        {
+          isShowRejectModal && <AcceptModal onConfirm={rejectModalConfirmAction} onCancel={rejectModalCancelAction} title={'آیا از رد کامنت اطمینان دارید؟'} />
         }
       </div>
       <ToastContainer

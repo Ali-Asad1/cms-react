@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import DeleteModal from '../Modals/DeleteModal/DeleteModal'
+import AcceptModal from '../Modals/AcceptModal/AcceptModal'
 import DetailModal from '../Modals/DetailModal/DetailModal'
 import EditModal from '../Modals/EditModal/EditModal'
-import { BsCursorText, BsBag } from 'react-icons/bs'
+import { BsCursorText } from 'react-icons/bs'
 import ErrorBox from '../ErrorBox/ErrorBox'
 import './ProductTable.css'
 import Loader from '../Loader/Loader'
@@ -153,7 +153,7 @@ export default function ProductTable({ allProduct, isInProgress, fetchDatas, suc
                     )
 
                 }
-                {isShowDeleteModal && <DeleteModal onCancel={deleteModalCalncelAction} onConfirm={deleteModalConfirmAction} />}
+                {isShowDeleteModal && <AcceptModal title={'آیا از حذف اطمینان دارید؟'} onCancel={deleteModalCalncelAction} onConfirm={deleteModalConfirmAction} />}
                 {isShowDetailsModal && <DetailModal onClose={detailsModalClose} productDetails={mainProduct} />}
                 {
                     isShowEditModal &&
