@@ -236,7 +236,7 @@ export default function Comments() {
           isShowTextModal && <TextModal closeBtn={closeTextModal} commentText={mainCommentText} />
         }
         {
-          isShowDeleteModal && <DeleteModal onConfirm={deleteModalConfirmAction} onCancel={deleteModalCancelAction} />
+          isShowDeleteModal && <AcceptModal onConfirm={deleteModalConfirmAction} onCancel={deleteModalCancelAction} title={'آیا از حذف اطمینان دارید؟'} />
         }
         {
           isShowEditModal && <EditModal onSubmit={editModalConfirmAction} onClose={editModalCancelAction}>
