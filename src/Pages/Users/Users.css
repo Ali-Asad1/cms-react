@@ -23,4 +23,13 @@
     border-bottom: 1px solid #e2e2e2;
 }
 
-
+.users-table-btn {
+	background-color: var(--primary);
+	border: none;
+	color: var(--white);
+	padding: 8px 15px;
+	margin: 0 3px;
+	border-radius: 10px;
+	font-weight: 600;
+	box-shadow: rgb(149, 157, 165, 20%) 0 8px 24px;
+}

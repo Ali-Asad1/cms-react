@@ -4,7 +4,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../../Components/Loader/Loader';
 import TextModal from '../../Components/Modals/TextModal/TextModal';
-import DeleteModal from '../../Components/Modals/AcceptModal/AcceptModal';
 import EditModal from '../../Components/Modals/EditModal/EditModal';
 import { BsCursorText } from 'react-icons/bs'
 import './Comments.css'
